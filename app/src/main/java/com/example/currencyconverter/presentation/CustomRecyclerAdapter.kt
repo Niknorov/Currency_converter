@@ -9,11 +9,13 @@ import com.example.currencyconverter.R
 import com.example.currencyconverter.domain.CurrencyModel
 import com.example.currencyconverter.domain.GetCurrencyUseCase
 
-class CustomRecyclerAdapter(private val currencies: List<CurrencyModel>): RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder>() {
+class CustomRecyclerAdapter(private val currencies: List<CurrencyModel>) :
+    RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder>() {
+
+    var onItemClick: ((CurrencyModel) -> Unit)? = null
 
 
-
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var currencyName: TextView? = null
         var currencyValue: TextView? = null
@@ -40,6 +42,9 @@ class CustomRecyclerAdapter(private val currencies: List<CurrencyModel>): Recycl
         holder.currencyValue?.text = currencies[position].value.toString()
         holder.currencyCharCode?.text = currencies[position].charCode
         holder.currencyNominal?.text = currencies[position].nominal.toString()
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(currencies[position])
+        }
     }
 
     override fun getItemCount() = currencies.size
