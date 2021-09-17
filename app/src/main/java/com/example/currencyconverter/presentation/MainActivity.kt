@@ -3,7 +3,9 @@ package com.example.currencyconverter.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -36,7 +38,9 @@ class MainActivity : AppCompatActivity() {
             swipeRefresh.isRefreshing = false
             val adapter = CustomRecyclerAdapter(it)
             adapter.onItemClick = {
-                // dialog
+                val myDialogFragment = MyDialogFragment(it)
+                val manager = supportFragmentManager
+                myDialogFragment.show(manager, "myDialog")
             }
             currencyRecyclerView.adapter = adapter
         }
